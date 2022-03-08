@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predictor</title>
+    <style>
+        @font-face {
+            font-family: sui-light;
+            src:
+                local("Segoe UI Light"),
+                url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+            font-weight: 100;
+        }
+
+        @font-face {
+            font-family: sui-semi-light;
+            src:
+                local("Segoe UI Semilight"),
+                url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.ttf) format("truetype");
+            font-weight: 200;
+        }
+
+        @font-face {
+            font-family: sui;
+            src:
+                local("Segoe UI"),
+                url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: sui-bold;
+            src:
+                local("Segoe UI Bold"),
+                url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf) format("truetype");
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: sui-semi-bold;
+            src:
+                local("Segoe UI Semibold"),
+                url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype");
+            font-weight: 700;
+        }
+    </style>
+    <style>
+        body{
+           font-family:'sui-bold';
+        }
+        .input{
+             margin:10px;
+            float:left;
+        }
+        .in{
+          width:400px;
+          height:50px;
+          border-radius:2px;
+          border:1px solid black;
+          outline:none;
+        }
+        #but{
+          margin:10px;
+          background-color:black;
+          color:white;
+          margin-top:150px;
+          font-family:'sui-bold';
+          font-size:18px;
+        }
+        .whole{
+          margin-top:80px;
+          display:flex;
+          justify-content:center;
+        }
+        .frm{
+          z-index:999;
+          overflow-y:auto;
+        }
+        @keyframes red{
+          from{
+            background-color:red;
+            clip-path:circle(0% at 0px 0px)
+          }
+          to{
+            background-color:red;
+            clip-path:circle(200% at 0px 0px)
+          }
+        }
+         @keyframes green{
+          from{
+            background-color:green;
+            clip-path:circle(0% at 0px 0px)
+          }
+          to{
+            background-color:green;
+            clip-path:circle(200% at 0px 0px)
+          }
+        }
+        body{
+          top:0px;
+          margin:0px;
+          padding:0px;
+          padding-top:0px;
+        }
+        header{
+         top:0px;
+          height:70px;
+          position:fixed;
+          width:100%;
+          z-index:9999;
+          background-color:black;
+          color:white;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+        }
+        .nf{
+          position:absolute;
+          top:0px;
+          bottom:0px;
+          right:0px;
+          left:0px;
+          height:100%;
+        }
+       .ot{
+         font-size:25px;
+         text-align:center;
+       }
+       .input > p{
+          font-size:18px;
+          font-weight:bolder;
+        }
+        #name{
+         font-size:22px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div id="name">
+        Predictor
+    </div>
+</header>
+<div class="nf" id="con"></div>
+<div class="whole">
+    <input type="hidden" value="{{data.output}}" id="out">
+  <form method="post" action="/" autocomplete="off" class="frm">
+     {% if data.got %}
+      {% if data.output == 1 %}
+          <P class="ot">YOU HAVE SYMPTOMS OF DIABETES</P>
+      {% endif %}
+      {% if data.output == 0 %}
+          <P class="ot">YOU HAVE NO SYMPTOMS OF DIABETES</P>
+      {% endif %}
+      {% endif %}
+      <div class="inputs">
+      <div class="input">
+          <p>Pregnancies:</p>
+           <input type="text" name="Pregnancies"  class="in" required/>
+      </div>
+      <div class="input">
+           <p> Glucose:</p>
+           <input type="text" name="Glucose"  class="in" required/>
+      </div>
+      <div class="input">
+           <p>BloodPressure:</p>
+           <input type="text" name="bp"  class="in" required/>
+      </div>
+          <br>
+      <div class="input">
+           <p>SkinThickness:</p>
+          <input type="text" name="SkinThickness"  class="in" required/>
+      </div>
+      <div class="input">
+          <p>Insulin: </p>
+          <input type="text" name="Insulin"  class="in" required/>
+      </div>
+      <div class="input">
+          <p>BMI:</p>
+          <input type="text" name="BMI"  class="in" required/>
+      </div>
+                    <br>
+      <div class="input">
+          <p>DiabetesPedigreeFunction:</p>
+          <input type="text" name="DiabetesPedigreeFunction"  class="in" required/>
+      </div>
+          <br>
+      <div>
+           <button type="submit" class="in" id="but">Predict</button>
+      </div>
+      </div>
+  </form>
+    </div>
+<script>
+    setInterval(()=>{
+       var output=document.getElementById("out").value
+       var con=document.getElementById("con")
+       if(output != ""){
+         if(output=="1"){
+             con.style.animation="red 3s ease"
+             con.style.clipPath="circle(200% at 0px 0px)"
+             con.style.backgroundColor="red"
+         }
+         else{
+             con.style.animation="green 3s ease"
+             con.style.clipPath="circle(200% at 0px 0px)"
+             con.style.backgroundColor="green"
+         }
+       }
+    },1000)
+</script>
+</body>
+</html>
